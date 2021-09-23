@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SpotifyServiceApplication
 
 fun main(args: Array<String>) {
-	runApplication<SpotifyServiceApplication>(*args)
+    runApplication<SpotifyServiceApplication>(*args)
 }

@@ -2,23 +2,19 @@ package com.spotifyservice.authorize
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-import java.io.IOException
-import java.util.*
+import java.util.Base64
 
 @Service
 class AuthorizeService {
     private val client = OkHttpClient()
     private val BASE_URL = "https://accounts.spotify.com/api/token"
+
     // todo make these secrets
     private val CLIENT_ID = ""
     private val CLIENT_SECRET = ""

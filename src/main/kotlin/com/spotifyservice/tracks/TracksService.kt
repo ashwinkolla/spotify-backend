@@ -2,13 +2,10 @@ package com.spotifyservice.tracks
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.spotifyservice.authorize.AuthorizeResponse
 import com.spotifyservice.authorize.AuthorizeService
-import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
@@ -24,7 +21,7 @@ class TracksService {
             ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Authorization failed. Could not get track")
 
         val request = Request.Builder()
-            .url(BASE_URL+trackId)
+            .url(BASE_URL + trackId)
             .addHeader(
                 "Authorization", "Bearer ${authorizeResponse.accessToken}"
             )

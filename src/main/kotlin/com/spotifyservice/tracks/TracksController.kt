@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RestController
 class TracksController {
     private val tracksService: TracksService = TracksService()
 
-
     @GetMapping("/{id}")
-    fun getSong(@PathVariable id: String) : TracksResponse? {
+    fun getSong(@PathVariable id: String): TracksResponse? {
         return tracksService.getTrack(id)
     }
 }
