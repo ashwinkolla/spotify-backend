@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.util.Base64
+import mu.KotlinLogging
 
 @Service
 class AuthorizeService {
@@ -45,13 +46,13 @@ class AuthorizeService {
                 if (it.isSuccessful) {
                     val authorizeResponse = it.body?.string()?.let { body ->
                         mapper.readValue<AuthorizeResponse>(body).also {
-                            println("authorize response is $it") // todo make these actual log messages
+                            logger.info("Authorize response is $it")
                         }
                     }
                     authorizeResponse
                 } else {
                     val body = it.body?.string()
-                    println("Authorization flow failed. Error body: $body")
+                    logger.error("Authorization flow failed. Error body: $body")
                     throw ResponseStatusException(HttpStatus.valueOf(it.code), body)
                 }
             }
@@ -62,5 +63,9 @@ class AuthorizeService {
 
     private fun base64Encode(): String {
         return base64.encode("$CLIENT_ID:$CLIENT_SECRET".toByteArray()).decodeToString()
+    }
+
+    companion object {
+        private val logger = KotlinLogging.logger {}
     }
 }

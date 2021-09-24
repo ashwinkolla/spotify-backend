@@ -25,6 +25,7 @@ dependencies {
 	implementation("com.squareup.okhttp3:okhttp:4.2.2")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.+")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
+	implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
