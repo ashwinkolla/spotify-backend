@@ -3,6 +3,7 @@ package com.spotifyservice.tracks
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.spotifyservice.authorize.AuthorizeService
+import mu.KotlinLogging
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.springframework.http.HttpStatus
@@ -38,18 +39,22 @@ class TracksService {
                 if (it.isSuccessful) {
                     val tracksResponse = it.body?.string()?.let { body ->
                         mapper.readValue<TracksResponse>(body).also {
-                            println("tracks response is $it") // todo make these actual log messages
+                            logger.info("Tracks response is $it")
                         }
                     }
                     tracksResponse
                 } else {
                     val body = it.body?.string()
-                    println("track call failed. Error body: $body")
+                    logger.error("Track call failed. Error body: $body")
                     throw ResponseStatusException(HttpStatus.valueOf(it.code), body)
                 }
             }
         } catch (e: Exception) {
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.message)
         }
+    }
+
+    companion object {
+        private val logger = KotlinLogging.logger {}
     }
 }
