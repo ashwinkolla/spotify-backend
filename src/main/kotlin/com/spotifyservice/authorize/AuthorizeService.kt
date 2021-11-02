@@ -16,7 +16,10 @@ class AuthorizeService {
     private val client = OkHttpClient()
     private val BASE_URL = "https://accounts.spotify.com/api/token"
 
-    // todo make these secrets
+    /**
+     * @todo Take Make Client info secrets
+     * @body Currently the client information (id and secrets) live in the service. Move them to a vault of some sort
+     */
     private val CLIENT_ID = ""
     private val CLIENT_SECRET = ""
     private val base64 = Base64.getUrlEncoder()
