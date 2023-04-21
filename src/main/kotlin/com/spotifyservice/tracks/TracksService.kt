@@ -24,7 +24,8 @@ class TracksService {
         val request = Request.Builder()
             .url(BASE_URL + trackId)
             .addHeader(
-                "Authorization", "Bearer ${authorizeResponse.accessToken}"
+                "Authorization",
+                "Bearer ${authorizeResponse.accessToken}"
             )
             .addHeader(
                 "Content-type",
@@ -35,7 +36,6 @@ class TracksService {
 
         return try {
             client.newCall(request).execute().let {
-
                 if (it.isSuccessful) {
                     val tracksResponse = it.body?.string()?.let { body ->
                         mapper.readValue<TracksResponse>(body).also {

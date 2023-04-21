@@ -1,0 +1,15 @@
+name: Spotify Service Actions
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  Test:
+    runs-on: openjdk:17-alpine
+    steps:
+      - name: Init gradle wrapper
+        run: gradle wrapper
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Test with Gradle
+        run: ./gradlew clean check

@@ -34,7 +34,8 @@ class AuthorizeService {
         val request = Request.Builder()
             .url(BASE_URL)
             .addHeader(
-                "Authorization", "Basic ${base64Encode()}"
+                "Authorization",
+                "Basic ${base64Encode()}"
             )
             .addHeader(
                 "Content-type",
@@ -45,7 +46,6 @@ class AuthorizeService {
 
         return try {
             client.newCall(request).execute().let {
-
                 if (it.isSuccessful) {
                     val authorizeResponse = it.body?.string()?.let { body ->
                         mapper.readValue<AuthorizeResponse>(body).also {

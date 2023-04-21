@@ -1,19 +1,26 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.5.0"
+	id("org.springframework.boot") version "2.7.8"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	kotlin("jvm") version "1.5.0"
-	kotlin("plugin.serialization") version "1.5.0"
-	kotlin("plugin.spring") version "1.5.0"
+	kotlin("jvm") version "1.8.10"
+	kotlin("plugin.serialization") version "1.6.0"
+	kotlin("plugin.spring") version "1.8.10"
+	id("com.diffplug.spotless") version "6.18.0"
 }
 
 group = "com.spotify-service"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(17))
+	}
+}
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
@@ -32,7 +39,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
+		jvmTarget = "17"
 	}
 }
 
@@ -43,7 +50,7 @@ tasks.withType<Test> {
 val ktlint by configurations.creating
 
 dependencies {
-	ktlint("com.pinterest:ktlint:0.42.1") {
+	ktlint("com.pinterest:ktlint:0.46.1") {
 		attributes {
 			attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
 		}
@@ -54,22 +61,8 @@ dependencies {
 val outputDir = "${project.buildDir}/reports/ktlint/"
 val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
 
-val ktlintCheck by tasks.creating(JavaExec::class) {
-	inputs.files(inputFiles)
-	outputs.dir(outputDir)
-
-	description = "Check Kotlin code style."
-	classpath = ktlint
-	main = "com.pinterest.ktlint.Main"
-	args = listOf("src/**/*.kt")
-}
-
-val ktlintFormat by tasks.creating(JavaExec::class) {
-	inputs.files(inputFiles)
-	outputs.dir(outputDir)
-
-	description = "Fix Kotlin code style deviations."
-	classpath = ktlint
-	main = "com.pinterest.ktlint.Main"
-	args = listOf("-F", "src/**/*.kt")
+spotless {
+	kotlin {
+		ktlint("0.46.0")   // has its own section below
+	}
 }
