@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class TracksResponse(
-    val album: Album,
+    val album: Album
 )
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
