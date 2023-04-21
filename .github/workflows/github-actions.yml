@@ -5,8 +5,10 @@ on:
       - main
 jobs:
   Test:
-    runs-on: ubuntu-latest
+    runs-on: openjdk:17-alpine
     steps:
+      - name: Init gradle wrapper
+        run: gradle wrapper
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Test with Gradle
